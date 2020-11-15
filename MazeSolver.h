@@ -169,7 +169,9 @@ bool Maze::solveMaze() {
   int destination = mazeSize - 1;
   int currentLocation=0;
 
-  
+  do{
+    
+  }while(path.empty());
   return true;
 }
 
