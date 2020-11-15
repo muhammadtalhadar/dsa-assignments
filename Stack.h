@@ -1,6 +1,5 @@
 #pragma once
 #include "List.h"
-#include"ListLinker.h"
 
 template<typename T>
 class Stack :
