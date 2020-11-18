@@ -18,6 +18,7 @@ public:
     bool full()const;
     bool empty()const;
     void push(const T);
+  T head()const;
     T pop();
 
     int getCurrentSize()const;
@@ -103,6 +104,10 @@ int Stack<T>::getMaxSize() const
     return List<T>::maxSize;
 }
 
+template<typename T>
+T Stack<T>::head()const{
+  return List<T>::arr[List<T>::currentSize-1];
+}
 template<typename T>
 const T& Stack<T>::operator[](const int index)const
 {

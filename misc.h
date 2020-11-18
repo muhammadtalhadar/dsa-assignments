@@ -1,5 +1,4 @@
 #pragma once
-using namespace std;
 
 template<typename T>
 void deepCopy(T*& dest, const T* src, const int srcSize=0){
@@ -9,4 +8,20 @@ void deepCopy(T*& dest, const T* src, const int srcSize=0){
 			dest[i] = src[i];
 		}
 	}
+}
+
+
+int len(const char* arr){
+  int i=0;
+  while(arr[i]!='\0'){
+    i++;
+  }
+  return i;
+}
+
+
+void clearArr(char*& dest){
+  for(int i=0; i<len(dest);i++){
+    dest[i]='\0';
+  }
 }
