@@ -83,7 +83,7 @@ bool Stack<T>::empty() const
 template<typename T>
 void Stack<T>::push(const T obj)
 {
-    addElement(obj);
+    this->addElement(obj);
 }
 
 template<typename T>
