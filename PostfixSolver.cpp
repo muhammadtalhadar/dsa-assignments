@@ -75,7 +75,6 @@ char *infinixToPostfix(const char *infinix)
         postfix[postfixLen++] = tempStk.pop();
       }
 
-      postfixInsertion=true;
       // pop the unmatched parenthesis from our stack
       tempStk.pop();
     }
@@ -98,7 +97,6 @@ char *infinixToPostfix(const char *infinix)
         // move the iterator for infinix expression forward.
         i++;
       }
-      postfixInsertion=true;
     }
     // case for when our next char is a operator
     else if (opPrecedence(infinix[i]) != -1)
@@ -113,13 +111,11 @@ char *infinixToPostfix(const char *infinix)
         postfix[postfixLen++] = tempStk.pop();
         tempStk.push(infinix[i]);
       }
-      postfixInsertion=true;
     }
 
     if(!tempStk.empty() && postfixLen!=0){
-      postfix[postfixLen++]='_';
+      postfix[postfixLen++]=' ';
     }
-    postfixInsertion=false;
   }
   return postfix;
 }
