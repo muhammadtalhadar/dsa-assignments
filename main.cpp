@@ -4,8 +4,8 @@ using namespace std;
 
 int main(){
   Maze m1;
-  cout<<m1.readMaze("maze.txt")<<endl;
+  m1.readMaze("maze.txt");
   m1.visualizeMaze();
-  cout<<m1.writeMaze("newMaze.txt")<<endl;
+  cout << endl;
   return 0;
 }
