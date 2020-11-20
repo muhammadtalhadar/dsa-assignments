@@ -30,7 +30,6 @@ struct Node
   {
     x = _x, y = _y;
   }
-  
 };
 
 ostream &operator<<(ostream &out, const Node &obj)
@@ -47,6 +46,11 @@ class Maze
 private:
   // maze as a 2d array
   int **maze;
+
+  // TODO remove *solution, its redundant.
+  
+  // solution as array of nodes
+  Node *solution;
   // maze dimensions
   int rows;
   int columns;
@@ -72,11 +76,18 @@ public:
   bool writeMaze(const char *) const;
 
   // prints out the current maze to console
-  bool visualizeMaze() const;
+  void visualizeMaze() const;
 
   // finds a path in maze from start to finish
   // returns solution as an array of struct Node.
   Node *solveMaze();
+
+  // if solved, returns the solution to maze.
+  Node* getSolution()const;
+
+
+  // empties all attributes for maze class.
+  // bool emptyMaze();
 };
 
 /*
@@ -85,7 +96,7 @@ public:
 
 Maze::Maze()
 {
-  this->maze = nullptr;
+  this->maze = nullptr, this->solution = nullptr;
   this->rows = 0, this->columns = 0;
   this->solved = false;
 }
@@ -98,12 +109,15 @@ Maze::~Maze()
     // delete memory at each row
     for (int i = 0; i < this->rows; i++)
     {
-      delete[] this->maze[i];
-      this->maze[i] = nullptr;
+      if (this->maze[i])
+      {
+        delete[] this->maze[i];
+        this->maze[i] = nullptr;
+      }
     }
     delete[] this->maze;
-    this->maze = nullptr;
   }
+  this->maze = nullptr;
 }
 
 // methods
@@ -151,7 +165,7 @@ bool Maze::readMaze(const char *path)
   return true;
 }
 
-bool Maze::visualizeMaze() const
+void Maze::visualizeMaze() const
 {
   if (maze)
   {
@@ -163,9 +177,7 @@ bool Maze::visualizeMaze() const
       }
       cout << endl;
     }
-    return true;
   }
-  return false;
 }
 
 bool Maze::writeMaze(const char *path) const
@@ -202,18 +214,19 @@ Node *Maze::solveMaze()
 {
 
   // the solution array to be returned
-  Node *solution = nullptr;
-  int solutionSize = 0;
-
-  // the stack for backtracking
-  Stack<Node> path;
-
-  // the direction moved
-  int dir = 0;
+  Node *sol = nullptr;
+  int solSize = 0;
 
   if (maze && !solved)
   {
-    Node top(0, 0, 0);
+
+    // the stack for backtracking
+    Stack<Node> path;
+
+    // the direction moved
+    int dir = 0;
+
+    Node top(0, 0);
 
     path.push(top);
 
@@ -227,18 +240,13 @@ Node *Maze::solveMaze()
       // if our latest move is our destination node, break loop.
       if (top.x == this->rows - 1 && top.y == this->columns - 1)
       {
+        maze[top.x][top.y] = -1;
         this->solved = true;
         break;
       }
 
-      // update our path's top's direction by replacing it with an update Node.
-      // using a nameless temporary object for that purpose.
-      // path.pop();
-      // path.push(Node(top.x, top.y, top.direction + 1));
-
       // for each direction from our path's top,
       // check if a move was valid, then make that move.
-
       while (dir < 4)
       {
         //upwards
@@ -256,7 +264,7 @@ Node *Maze::solveMaze()
         // rightwards
         else if (dir == 1)
         {
-          if (top.y + 1 < this->columns && maze[top.x][top.y + 1] != 0 && maze[top.x][top.y+1] != -1)
+          if (top.y + 1 < this->columns && maze[top.x][top.y + 1] != 0 && maze[top.x][top.y + 1] != -1)
           {
             // mark current location as visited
             maze[top.x][top.y] = -1;
@@ -278,7 +286,7 @@ Node *Maze::solveMaze()
           // leftwards
           else if (dir == 3)
           {
-            if (top.y - 1 > 0 && maze[top.x][top.y - 1] != 0 && maze[top.x][top.y-1] != -1)
+            if (top.y - 1 > 0 && maze[top.x][top.y - 1] != 0 && maze[top.x][top.y - 1] != -1)
             {
               // mark current location as visited
               maze[top.x][top.y] = -1;
@@ -304,25 +312,25 @@ Node *Maze::solveMaze()
       else
       {
         maze[top.x][top.y] = 0;
-        // pop current location
-        //  top will now backtrack to previous visited node..
         path.pop();
       }
     }
 
+    // save solution from stack to this->solution and return a copy
     if (!path.empty())
     {
-      solutionSize = stackSize<Node>(path);
-      solution = new Node[solutionSize + 1];
+      solSize = stackSize<Node>(path);
+      sol = new Node[solSize + 1];
 
       // Node(-1,-1) is taken as array delimiter
-      solution[solutionSize] = Node();
+      sol[solSize] = Node();
       //
-      for (int i = solutionSize - 1; i >= 0; i--)
+      for (int i = solSize - 1; i >= 0; i--)
       {
-        solution[i] = path.pop();
+        sol[i] = path.pop();
       }
+      deepCopy<Node>(this->solution, sol, solSize + 1);
     }
   }
-  return solution;
+  return sol;
 }
