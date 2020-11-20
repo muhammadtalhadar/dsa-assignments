@@ -1,7 +1,5 @@
-#include <initializer_list>
+#pragma once
 #include <iostream>
-#include "List.h"
-#include "misc.h"
 #include "Stack.h"
 using namespace std;
 
@@ -40,11 +38,11 @@ int opPrecedence(const char op)
 char *infinixToPostfix(const char *infinix)
 {
   int infinixLen = len(infinix);
-  bool postfixInsertion=false;
-  
+  bool postfixInsertion = false;
+
   // our result as postfix expression
   int postfixLen = 0;
-  char *postfix = new char[infinixLen+1]{'\0'};
+  char *postfix = new char[infinixLen + 1]{'\0'};
 
   // stack to hold our operators
   Stack<char> tempStk;
@@ -89,7 +87,7 @@ char *infinixToPostfix(const char *infinix)
 
       //if immediate next char was also a digit, then we have a tens number.
       //put this digit into out postfix as well
-      while(infinix[i + 1] != '\0' && infinix[i + 1] >= '0' && infinix[i + 1] <= '9')
+      while (infinix[i + 1] != '\0' && infinix[i + 1] >= '0' && infinix[i + 1] <= '9')
       {
         postfix[postfixLen++] = infinix[i + 1];
 
@@ -104,7 +102,7 @@ char *infinixToPostfix(const char *infinix)
 
       if (opPrecedence(infinix[i]) > opPrecedence(tempStk.head()))
       {
-	tempStk.push(infinix[i]);
+        tempStk.push(infinix[i]);
       }
       else if (opPrecedence(infinix[i]) <= opPrecedence(tempStk.head()))
       {
@@ -113,18 +111,10 @@ char *infinixToPostfix(const char *infinix)
       }
     }
 
-    if(!tempStk.empty() && postfixLen!=0){
-      postfix[postfixLen++]=' ';
+    if (!tempStk.empty() && postfixLen != 0)
+    {
+      postfix[postfixLen++] = ' ';
     }
   }
   return postfix;
-}
-int main()
-{
-  char infinix[] = {"(((12+13)*(20-30))/(811+99))"};
-
-  cout << endl;
-  char* postfix= infinixToPostfix(infinix);
-  cout<<postfix<<endl;
-  return 0;
 }

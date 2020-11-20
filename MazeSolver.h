@@ -4,9 +4,6 @@
 #include <iostream>
 using namespace std;
 
-/*
-  MISC FUNCTIONS
-*/
 template <typename T>
 int stackSize(Stack<T> stk)
 {
@@ -48,7 +45,7 @@ private:
   int **maze;
 
   // TODO remove *solution, its redundant.
-  
+
   // solution as array of nodes
   Node *solution;
   // maze dimensions
@@ -83,8 +80,7 @@ public:
   Node *solveMaze();
 
   // if solved, returns the solution to maze.
-  Node* getSolution()const;
-
+  Node *getSolution() const;
 
   // empties all attributes for maze class.
   // bool emptyMaze();
@@ -94,6 +90,7 @@ public:
   Maze class implementation
 */
 
+// default constructor
 Maze::Maze()
 {
   this->maze = nullptr, this->solution = nullptr;
@@ -122,9 +119,10 @@ Maze::~Maze()
 
 // methods
 
+
+// const char* path: path of txt file where maze is to be read
 bool Maze::readMaze(const char *path)
 {
-  // const char* path: path of txt file where maze is to be read
 
   if (path)
   {
@@ -165,6 +163,7 @@ bool Maze::readMaze(const char *path)
   return true;
 }
 
+// displays out the maze
 void Maze::visualizeMaze() const
 {
   if (maze)
@@ -180,6 +179,7 @@ void Maze::visualizeMaze() const
   }
 }
 
+// writes the maze as a binary matrix to a txt file at const *path
 bool Maze::writeMaze(const char *path) const
 {
   if (maze)
@@ -305,7 +305,6 @@ Node *Maze::solveMaze()
       if (dir < 4)
       {
         path.push(top);
-        dir = 0;
       }
       // if no direction was moveable(dir==4),
       // mark current node as blocked, and backtrack.
@@ -314,6 +313,7 @@ Node *Maze::solveMaze()
         maze[top.x][top.y] = 0;
         path.pop();
       }
+      dir = 0;
     }
 
     // save solution from stack to this->solution and return a copy
@@ -330,6 +330,18 @@ Node *Maze::solveMaze()
         sol[i] = path.pop();
       }
       deepCopy<Node>(this->solution, sol, solSize + 1);
+    }
+
+    // change the visited path notation from -1 to 1
+    for (int i = 0; i < rows; i++)
+    {
+      for (int j = 0; j < columns; j++)
+      {
+        if (maze[i][j] == -1)
+        {
+          maze[i][j] = 1;
+        }
+      }
     }
   }
   return sol;
