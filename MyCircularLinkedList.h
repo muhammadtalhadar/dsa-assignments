@@ -3,32 +3,32 @@
 #include <iostream>
 using namespace std;
 
-template <class T> class MyCircularLinkedList : CircularLinkedList<T> {
+template <class T> class MyCircularLinkedList :public CircularLinkedList<T> {
 
 public:
   // constructor
   MyCircularLinkedList();
   // destructor
   // ~MyCircularLinkedList();
-  virtual void destroyCircularLinkedList() override;
+  virtual void destroyCircularLinkedList() override{};
 
   // insertion
   virtual void insertFirstNode(T) override;
   virtual void insertAtTail(T) override;
 
   // deletion
-  virtual bool deleteAValue(T) override;
   virtual bool deleteFromTail() override;
   virtual bool deleteFirstNode() override;
+  virtual bool deleteAValue(T) override;
 
   // searching
-  virtual bool search(T) override;
-  virtual int searchPositionOfValue(T) override;
+  virtual bool search(T val) override{return true;};
+  virtual int searchPositionOfValue(T val) override{return -1;};
 
   // sorting
-  virtual void sortCircularListInAscendingOrder() override;
-  virtual void sortCircularListInDescendingOrder() override;
-
+  virtual void sortCircularListInAscendingOrder() override{};
+  virtual void sortCircularListInDescendingOrder() override{};
+  
   // misc
   virtual void print() override;
 };
@@ -44,6 +44,13 @@ MyCircularLinkedList<T>::MyCircularLinkedList() : CircularLinkedList<T>() {}
 //   MyCircularLinkedList<T>::tail=nullptr;
 // }
 
+
+
+/*
+  Insertion
+*/
+
+//inserts a node at start of LL
 template <class T> void MyCircularLinkedList<T>::insertFirstNode(T data) {
 
   // if CLL is empty
@@ -51,16 +58,80 @@ template <class T> void MyCircularLinkedList<T>::insertFirstNode(T data) {
     this->tail = new Node<T>(data);
     this->tail->setNext(this->tail);
   }
-  // if CLL is not empty, locate second last element of CLL
+  // if CLL is not empty
   else {
-    Node<T> *head = this->tail->next();
-    while (head->next() != this->tail) {
-      head = head->next();
-    }
-    // create new node, at as next node of second last node, and set new node's
-    // next to tail.
-    head->next(new Node<T>(data, this->tail));
+    Node<T> *temp = this->tail->next();
+    this->tail->setNext(new Node<T>(data, temp));
   }
+}
+
+// inserts a new node as tail
+template<class T> void MyCircularLinkedList<T>::insertAtTail(T data){
+
+  // if CLL is empty
+  if(!this->tail){
+    this->tail=new Node<T>(data);
+    this->tail->setNext(this->tail);
+  }
+  else{
+    // backup next of tail
+    Node<T>* temp=this->tail->next();
+    // insert new node at next of tail with it's next set to next of tail
+    this->tail->setNext(new Node<T>(data, temp));
+    // move tail forward to point to new node
+    this->tail=this->tail->next();
+  }
+}
+
+/*
+  Deletion
+*/ 
+
+template<class T>
+bool MyCircularLinkedList<T>::deleteFirstNode(){
+  // if list was empty
+  if(!this->tail){
+    return false;
+  }
+
+  // if there was only one node
+  if(this->tail->next()==this->tail){
+    delete[] this->tail;
+    this->tail=nullptr;
+    return true;
+  }
+  
+  Node<T>* todelete=nullptr;
+  Node<T>* newFirst=nullptr;
+
+  todelete=this->tail->next();
+  newFirst=todelete->next();
+
+  delete[] todelete;
+
+  this->tail->setNext(newFirst);
+
+  return true;
+}
+
+template<class T>
+bool MyCircularLinkedList<T>::deleteFromTail(){
+  if(!this->tail){
+    return false;
+  }
+
+  
+  return true;
+}
+
+template<class T>
+bool MyCircularLinkedList<T>::deleteAValue(T data){
+  if(!this->tail){
+    return false;
+  }
+
+  
+  return true;
 }
 
 // visualizes MyCircularLinkedList
@@ -68,14 +139,15 @@ template <class T> void MyCircularLinkedList<T>::print() {
   if (!MyCircularLinkedList::tail) {
     cout << "NULL";
   } else {
-    Node<T> *next = this->tail->next();
+    Node<T> *next = this->tail;
+    do{
+      next=next->next();
+      cout<<next->data();
 
-    while (next != this->tail) {
-      cout << next->data();
-
-      if (next->next() != this->tail) {
-        cout << " -> ";
+      if(next!=this->tail){
+        cout<<" -> ";
       }
-    }
+    }while (next!=this->tail);
+    
   }
 }
