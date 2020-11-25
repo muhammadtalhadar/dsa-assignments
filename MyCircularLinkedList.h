@@ -22,12 +22,12 @@ public:
   virtual bool deleteAValue(T) override;
 
   // searching
-  virtual bool search(T val) override{return true;};
-  virtual int searchPositionOfValue(T val) override{return -1;};
+  virtual bool search(T val) override{return true;}
+  virtual int searchPositionOfValue(T val) override{return -1;}
 
   // sorting
-  virtual void sortCircularListInAscendingOrder() override{};
-  virtual void sortCircularListInDescendingOrder() override{};
+  virtual void sortCircularListInAscendingOrder() override{}
+  virtual void sortCircularListInDescendingOrder() override{}
   
   // misc
   virtual void print() override;
