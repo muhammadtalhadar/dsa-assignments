@@ -154,8 +154,27 @@ bool MyCircularLinkedList<T>::deleteAValue(T data){
     return false;
   }
 
+  //if our data was located at tail
+  if(this->tail->data_ == data){
+    return this->deleteFromTail();
+  }
   
-  return true;
+  //
+  Node<T>* previous=this->tail; // the Node bhind the node to be deleted
+  Node<T>* toDelete=previous->next_; // the node to be deleted
+
+  while(toDelete!=this->tail){
+
+    if(toDelete->data_==data){
+      previous->next_=toDelete->next_;
+      delete toDelete;
+      return true;
+    }
+    
+    previous=previous->next_;
+    toDelete=previous->next_;
+  }
+  return false;
 }
 
 // visualizes MyCircularLinkedList
