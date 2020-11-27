@@ -41,6 +41,17 @@ int main(){
   cll.insertAtTail(100);
   cout<<endl<<"After new insertions: "<<endl;
   cll.print();
+  
   cout<<endl<<"search value(for circular tail); "<<cll.search(100)<<endl;
+  cout<<endl<<"search value 100 position(for circular tail case); "<<cll.searchPositionOfValue(100);
+  
+  cll.insertAtTail(101);
+  cll.insertFirstNode(99);
+  cout<<endl<<"After new insertions: "<<endl;
+  cll.print();
+  
+  cout<<endl<<"search value 101 position(at tail); "<<cll.searchPositionOfValue(101);
+  cout<<endl<<"search value 100 position(somewhere between head and tail); "<<cll.searchPositionOfValue(100);
+  cout<<endl<<"search value 99 position(at head); "<<cll.searchPositionOfValue(99);
   return 0;
 }

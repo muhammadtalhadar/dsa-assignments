@@ -23,7 +23,7 @@ public:
 
   // searching
   virtual bool search(T) override;
-  virtual int searchPositionOfValue(T) override{return 0;}
+  virtual int searchPositionOfValue(T) override;
 
   // sorting
   virtual void sortCircularListInAscendingOrder() override{}
@@ -191,6 +191,25 @@ template <typename T> bool MyCircularLinkedList<T>::search(T val) {
   return false;
 }
 
+template<typename T>
+int MyCircularLinkedList<T>::searchPositionOfValue(T val){
+  if(!this->tail){
+    return -1;
+  }
+
+  Node<T>* temp=this->tail->next_;
+  int i=1;
+  
+  do {
+    if (temp->data_ == val) {
+      return i;
+    }
+    i+=1;
+    temp = temp->next_;
+  } while (temp != this->tail->next_);
+
+  return -1;
+}
 // visualizes MyCircularLinkedList
 template <class T> void MyCircularLinkedList<T>::print() {
   if (!MyCircularLinkedList::tail) {
