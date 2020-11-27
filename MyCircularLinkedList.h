@@ -56,12 +56,12 @@ template <class T> void MyCircularLinkedList<T>::insertFirstNode(T data) {
   // if CLL is empty
   if (!this->tail) {
     this->tail = new Node<T>(data);
-    this->tail->setNext(this->tail);
+    this->tail->next_=this->tail;
   }
   // if CLL is not empty
   else {
-    Node<T> *temp = this->tail->next();
-    this->tail->setNext(new Node<T>(data, temp));
+    Node<T> *temp = this->tail->next_;
+    this->tail->next_=new Node<T>(data, temp);
   }
 }
 
@@ -71,15 +71,15 @@ template<class T> void MyCircularLinkedList<T>::insertAtTail(T data){
   // if CLL is empty
   if(!this->tail){
     this->tail=new Node<T>(data);
-    this->tail->setNext(this->tail);
+    this->tail->next_=this->tail;
   }
   else{
     // backup next of tail
-    Node<T>* temp=this->tail->next();
+    Node<T>* temp=this->tail->next_;
     // insert new node at next of tail with it's next set to next of tail
-    this->tail->setNext(new Node<T>(data, temp));
+    this->tail->next_=new Node<T>(data, temp);
     // move tail forward to point to new node
-    this->tail=this->tail->next();
+    this->tail=this->tail->next_;
   }
 }
 
@@ -95,7 +95,7 @@ bool MyCircularLinkedList<T>::deleteFirstNode(){
   }
 
   // if there was only one node
-  if(this->tail->next()==this->tail){
+  if(this->tail->next_==this->tail){
     delete[] this->tail;
     this->tail=nullptr;
     return true;
@@ -104,12 +104,12 @@ bool MyCircularLinkedList<T>::deleteFirstNode(){
   Node<T>* todelete=nullptr;
   Node<T>* newFirst=nullptr;
 
-  todelete=this->tail->next();
-  newFirst=todelete->next();
+  todelete=this->tail->next_;
+  newFirst=todelete->next_;
 
-  delete[] todelete;
+  delete todelete;
 
-  this->tail->setNext(newFirst);
+  this->tail->next_=newFirst;
 
   return true;
 }
@@ -141,8 +141,8 @@ template <class T> void MyCircularLinkedList<T>::print() {
   } else {
     Node<T> *next = this->tail;
     do{
-      next=next->next();
-      cout<<next->data();
+      next=next->next_;
+      cout<<next->data_;
 
       if(next!=this->tail){
         cout<<" -> ";

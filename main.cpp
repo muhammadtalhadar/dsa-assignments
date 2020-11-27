@@ -12,5 +12,7 @@ int main(){
   cll.insertAtTail(11);
   cll.insertFirstNode(8);
   cll.print();
+  cout<<endl<<"deletion of first: "<<cll.deleteFirstNode()<<endl;
+  cll.print();
   return 0;
 }

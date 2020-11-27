@@ -24,5 +24,5 @@ public:
 // constructor
 template<class T>
 CircularLinkedList<T>::CircularLinkedList(){
-  CircularLinkedList<T>::tail=nullptr;
+  this->tail=nullptr;
 }
