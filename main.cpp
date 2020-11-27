@@ -14,5 +14,7 @@ int main(){
   cll.print();
   cout<<endl<<"deletion of first: "<<cll.deleteFirstNode()<<endl;
   cll.print();
+  cout<<endl<<"deletion at tail: "<<cll.deleteFromTail()<<endl;
+  cll.print();
   return 0;
 }

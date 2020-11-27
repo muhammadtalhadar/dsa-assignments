@@ -116,10 +116,34 @@ bool MyCircularLinkedList<T>::deleteFirstNode(){
 
 template<class T>
 bool MyCircularLinkedList<T>::deleteFromTail(){
+  // if list is empty
   if(!this->tail){
     return false;
   }
 
+  // if had only one Node
+  if(this->tail==this->tail->next_){
+    delete this->tail;
+    this->tail=nullptr;
+    return true;
+  }
+
+  Node<T>* head=this->tail->next_;//first element of list, pointes at by tail
+  Node<T>* next=this->tail;
+
+  // point next to second last element of list
+  while(next->next_!=this->tail){
+    next=next->next_;
+  }
+
+  //delete tail
+  delete this->tail;
+
+  // point tail to second last(now last) node of list
+  this->tail=next;
+  
+  // point new tail to head
+  this->tail->next_=head;
   
   return true;
 }
