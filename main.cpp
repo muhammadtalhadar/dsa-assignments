@@ -113,6 +113,12 @@ int main()
      cll.sortCircularListInDescendingOrder();
      cll.print();
 
+          cout << endl
+          << endl
+          << "\tDESTROYING" << endl;
+	  cll.destroyCircularLinkedList();
+	  cll.print();
+
      cout <<endl<<endl<< "\t========== END DRIVER CODE ========== " << endl
           << endl;
      return 0;

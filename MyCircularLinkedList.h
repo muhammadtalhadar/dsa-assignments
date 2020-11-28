@@ -380,6 +380,7 @@ void MyCircularLinkedList<T>::sortCircularListInDescendingOrder()
 template <class T>
 void MyCircularLinkedList<T>::print()
 {
+  cout << "LINKED LIST: ";
   if (!MyCircularLinkedList::tail)
   {
     cout << "NULL";
@@ -387,7 +388,6 @@ void MyCircularLinkedList<T>::print()
   else
   {
     Node<T> *next = this->tail;
-    cout << "LINKED LIST: ";
     do
     {
       next = next->next_;
