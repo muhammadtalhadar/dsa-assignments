@@ -9,8 +9,8 @@ public:
   // constructor
   MyCircularLinkedList();
   // destructor
-  // ~MyCircularLinkedList();
-  virtual void destroyCircularLinkedList() override{};
+  ~MyCircularLinkedList();
+  virtual void destroyCircularLinkedList() override;
 
   // insertion
   virtual void insertFirstNode(T) override;
@@ -26,8 +26,8 @@ public:
   virtual int searchPositionOfValue(T) override;
 
   // sorting
-  virtual void sortCircularListInAscendingOrder() override{}
-  virtual void sortCircularListInDescendingOrder() override{}
+  virtual void sortCircularListInAscendingOrder() override;
+  virtual void sortCircularListInDescendingOrder() override;
 
   // misc
   virtual void print() override;
@@ -37,12 +37,28 @@ public:
 template <class T>
 MyCircularLinkedList<T>::MyCircularLinkedList() : CircularLinkedList<T>() {}
 
-// destructor implementation
-// template<class T>
-// MyCircularLinkedList<T>::~MyCircularLinkedList(){
-//   MyCircularLinkedList<T>::destroyCircularLinkedList();
-//   MyCircularLinkedList<T>::tail=nullptr;
-// }
+template <class T> MyCircularLinkedList<T>::~MyCircularLinkedList() {
+  MyCircularLinkedList<T>::destroyCircularLinkedList();
+}
+
+// destruction
+template <typename T>
+void MyCircularLinkedList<T>::destroyCircularLinkedList() {
+  if (this->tail) {
+    Node<T> *head = this->tail->next_;
+    Node<T> *temp = head;
+    this->tail->next_ = nullptr;
+
+    while (head) {
+      head = head->next_;
+
+      delete temp;
+
+      temp = head;
+    }
+  }
+  this->tail = nullptr;
+}
 
 /*
   Insertion
@@ -191,24 +207,77 @@ template <typename T> bool MyCircularLinkedList<T>::search(T val) {
   return false;
 }
 
-template<typename T>
-int MyCircularLinkedList<T>::searchPositionOfValue(T val){
-  if(!this->tail){
+template <typename T>
+int MyCircularLinkedList<T>::searchPositionOfValue(T val) {
+  if (!this->tail) {
     return -1;
   }
 
-  Node<T>* temp=this->tail->next_;
-  int i=1;
-  
+  Node<T> *temp = this->tail->next_;
+  int i = 1;
+
   do {
     if (temp->data_ == val) {
       return i;
     }
-    i+=1;
+    i += 1;
     temp = temp->next_;
   } while (temp != this->tail->next_);
 
   return -1;
+}
+
+// Sorting
+
+template <typename T>
+void MyCircularLinkedList<T>::sortCircularListInAscendingOrder() {}
+
+template <typename T>
+void MyCircularLinkedList<T>::sortCircularListInDescendingOrder() {
+  if (this->tail && this->tail != this->tail->next_) {
+    Node<T> *last = this->tail;
+    Node<T> *head = nullptr;
+    Node<T> *next = nullptr;
+    bool swapEvent=false;
+    
+    /*
+      We implement bubble sort to sort our CSLL.
+
+      We simulate the following bubble sort iterations for our LL;
+      for(int i=0; i<sizeOfMemory;i++) // outer loop
+          for(j=0;j<sizeOfMemory-i;j++) // inner loop
+
+      'last' serves as our sizeOfMemory-1 expression
+      and j=i=0=head=this->tail->next
+     */
+
+    while (last != this->tail->next_) {
+      head = this->tail;
+
+      while (next != last) {
+
+        // move head to start of CSLL, then forward successively.
+        head = head->next_;
+        next = head->next_;
+
+        // compare and swap head's and next node's data
+        if (head->data_ > next->data_) {
+          swapNodeData(head, next);
+	  swapEvent=true;
+        }
+      }
+      
+      // if no swap occurred, break iterations
+      if(!swapEvent){
+	break;
+      }
+      // reset swap flag
+      swapEvent=false;
+
+      // out head points to an Node behind the last element.
+      last = head;
+    }
+  }
 }
 // visualizes MyCircularLinkedList
 template <class T> void MyCircularLinkedList<T>::print() {
@@ -224,5 +293,13 @@ template <class T> void MyCircularLinkedList<T>::print() {
         cout << " -> ";
       }
     } while (next != this->tail);
+  }
+}
+
+template <typename T> void swapNodeData(Node<T> *&lhs, Node<T> *&rhs) {
+  if (lhs && rhs) {
+    T temp = lhs->data_;
+    lhs->data_ = rhs->data_;
+    rhs->data_ = temp;
   }
 }
