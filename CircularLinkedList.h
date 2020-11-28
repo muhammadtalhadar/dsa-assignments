@@ -1,7 +1,9 @@
 #pragma once
 #include "Node.h"
 
-template <class T> class CircularLinkedList {
+template <class T>
+class CircularLinkedList
+{
 protected:
   Node<T> *tail;
 
@@ -22,7 +24,8 @@ public:
 };
 
 // constructor
-template<class T>
-CircularLinkedList<T>::CircularLinkedList(){
-  this->tail=nullptr;
+template <class T>
+CircularLinkedList<T>::CircularLinkedList()
+{
+  this->tail = nullptr;
 }

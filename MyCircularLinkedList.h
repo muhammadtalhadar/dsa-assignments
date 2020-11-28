@@ -3,7 +3,9 @@
 #include <iostream>
 using namespace std;
 
-template <class T> class MyCircularLinkedList : public CircularLinkedList<T> {
+template <class T>
+class MyCircularLinkedList : public CircularLinkedList<T>
+{
 
 public:
   // constructor
@@ -37,19 +39,24 @@ public:
 template <class T>
 MyCircularLinkedList<T>::MyCircularLinkedList() : CircularLinkedList<T>() {}
 
-template <class T> MyCircularLinkedList<T>::~MyCircularLinkedList() {
+template <class T>
+MyCircularLinkedList<T>::~MyCircularLinkedList()
+{
   MyCircularLinkedList<T>::destroyCircularLinkedList();
 }
 
 // destruction
 template <typename T>
-void MyCircularLinkedList<T>::destroyCircularLinkedList() {
-  if (this->tail) {
+void MyCircularLinkedList<T>::destroyCircularLinkedList()
+{
+  if (this->tail)
+  {
     Node<T> *head = this->tail->next_;
     Node<T> *temp = head;
     this->tail->next_ = nullptr;
 
-    while (head) {
+    while (head)
+    {
       head = head->next_;
 
       delete temp;
@@ -65,28 +72,37 @@ void MyCircularLinkedList<T>::destroyCircularLinkedList() {
 */
 
 // inserts a node at start of LL
-template <class T> void MyCircularLinkedList<T>::insertFirstNode(T data) {
+template <class T>
+void MyCircularLinkedList<T>::insertFirstNode(T data)
+{
 
   // if CLL is empty
-  if (!this->tail) {
+  if (!this->tail)
+  {
     this->tail = new Node<T>(data);
     this->tail->next_ = this->tail;
   }
   // if CLL is not empty
-  else {
+  else
+  {
     Node<T> *temp = this->tail->next_;
     this->tail->next_ = new Node<T>(data, temp);
   }
 }
 
 // inserts a new node as tail
-template <class T> void MyCircularLinkedList<T>::insertAtTail(T data) {
+template <class T>
+void MyCircularLinkedList<T>::insertAtTail(T data)
+{
 
   // if CLL is empty
-  if (!this->tail) {
+  if (!this->tail)
+  {
     this->tail = new Node<T>(data);
     this->tail->next_ = this->tail;
-  } else {
+  }
+  else
+  {
     // backup next of tail
     Node<T> *temp = this->tail->next_;
     // insert new node at next of tail with it's next set to next of tail
@@ -100,14 +116,18 @@ template <class T> void MyCircularLinkedList<T>::insertAtTail(T data) {
   Deletion
 */
 
-template <class T> bool MyCircularLinkedList<T>::deleteFirstNode() {
+template <class T>
+bool MyCircularLinkedList<T>::deleteFirstNode()
+{
   // if list was empty
-  if (!this->tail) {
+  if (!this->tail)
+  {
     return false;
   }
 
   // if there was only one node
-  if (this->tail->next_ == this->tail) {
+  if (this->tail->next_ == this->tail)
+  {
     delete[] this->tail;
     this->tail = nullptr;
     return true;
@@ -126,14 +146,18 @@ template <class T> bool MyCircularLinkedList<T>::deleteFirstNode() {
   return true;
 }
 
-template <class T> bool MyCircularLinkedList<T>::deleteFromTail() {
+template <class T>
+bool MyCircularLinkedList<T>::deleteFromTail()
+{
   // if list is empty
-  if (!this->tail) {
+  if (!this->tail)
+  {
     return false;
   }
 
   // if had only one Node
-  if (this->tail == this->tail->next_) {
+  if (this->tail == this->tail->next_)
+  {
     delete this->tail;
     this->tail = nullptr;
     return true;
@@ -144,7 +168,8 @@ template <class T> bool MyCircularLinkedList<T>::deleteFromTail() {
   Node<T> *next = this->tail;
 
   // point next to second last element of list
-  while (next->next_ != this->tail) {
+  while (next->next_ != this->tail)
+  {
     next = next->next_;
   }
 
@@ -160,13 +185,17 @@ template <class T> bool MyCircularLinkedList<T>::deleteFromTail() {
   return true;
 }
 
-template <class T> bool MyCircularLinkedList<T>::deleteAValue(T data) {
-  if (!this->tail) {
+template <class T>
+bool MyCircularLinkedList<T>::deleteAValue(T data)
+{
+  if (!this->tail)
+  {
     return false;
   }
 
   // if our data was located at tail
-  if (this->tail->data_ == data) {
+  if (this->tail->data_ == data)
+  {
     return this->deleteFromTail();
   }
 
@@ -174,9 +203,11 @@ template <class T> bool MyCircularLinkedList<T>::deleteAValue(T data) {
   Node<T> *previous = this->tail;      // the Node bhind the node to be deleted
   Node<T> *toDelete = previous->next_; // the node to be deleted
 
-  while (toDelete != this->tail) {
+  while (toDelete != this->tail)
+  {
 
-    if (toDelete->data_ == data) {
+    if (toDelete->data_ == data)
+    {
       previous->next_ = toDelete->next_;
       delete toDelete;
       return true;
@@ -190,15 +221,20 @@ template <class T> bool MyCircularLinkedList<T>::deleteAValue(T data) {
 
 // searching
 
-template <typename T> bool MyCircularLinkedList<T>::search(T val) {
-  if (!this->tail) {
+template <typename T>
+bool MyCircularLinkedList<T>::search(T val)
+{
+  if (!this->tail)
+  {
     return false;
   }
 
   Node<T> *temp = this->tail;
 
-  do {
-    if (temp->data_ == val) {
+  do
+  {
+    if (temp->data_ == val)
+    {
       return true;
     }
     temp = temp->next_;
@@ -208,16 +244,20 @@ template <typename T> bool MyCircularLinkedList<T>::search(T val) {
 }
 
 template <typename T>
-int MyCircularLinkedList<T>::searchPositionOfValue(T val) {
-  if (!this->tail) {
+int MyCircularLinkedList<T>::searchPositionOfValue(T val)
+{
+  if (!this->tail)
+  {
     return -1;
   }
 
   Node<T> *temp = this->tail->next_;
   int i = 1;
 
-  do {
-    if (temp->data_ == val) {
+  do
+  {
+    if (temp->data_ == val)
+    {
       return i;
     }
     i += 1;
@@ -230,16 +270,15 @@ int MyCircularLinkedList<T>::searchPositionOfValue(T val) {
 // Sorting
 
 template <typename T>
-void MyCircularLinkedList<T>::sortCircularListInAscendingOrder() {}
-
-template <typename T>
-void MyCircularLinkedList<T>::sortCircularListInDescendingOrder() {
-  if (this->tail && this->tail != this->tail->next_) {
+void MyCircularLinkedList<T>::sortCircularListInAscendingOrder()
+{
+  if (this->tail && this->tail != this->tail->next_)
+  {
     Node<T> *last = this->tail;
     Node<T> *head = nullptr;
     Node<T> *next = nullptr;
-    bool swapEvent=false;
-    
+    bool swapEvent = false;
+
     /*
       We implement bubble sort to sort our CSLL.
 
@@ -251,28 +290,86 @@ void MyCircularLinkedList<T>::sortCircularListInDescendingOrder() {
       and j=i=0=head=this->tail->next
      */
 
-    while (last != this->tail->next_) {
+    while (last != this->tail->next_)
+    {
       head = this->tail;
 
-      while (next != last) {
+      while (next != last)
+      {
 
         // move head to start of CSLL, then forward successively.
         head = head->next_;
         next = head->next_;
 
         // compare and swap head's and next node's data
-        if (head->data_ > next->data_) {
+        if (head->data_ > next->data_)
+        {
           swapNodeData(head, next);
-	  swapEvent=true;
+          swapEvent = true;
         }
       }
-      
+
       // if no swap occurred, break iterations
-      if(!swapEvent){
-	break;
+      if (!swapEvent)
+      {
+        break;
       }
       // reset swap flag
-      swapEvent=false;
+      swapEvent = false;
+
+      // out head points to an Node behind the last element.
+      last = head;
+    }
+  }
+}
+
+template <typename T>
+void MyCircularLinkedList<T>::sortCircularListInDescendingOrder()
+{
+  if (this->tail && this->tail != this->tail->next_)
+  {
+    Node<T> *last = this->tail;
+    Node<T> *head = nullptr;
+    Node<T> *next = nullptr;
+    bool swapEvent = false;
+
+    /*
+      We implement bubble sort to sort our CSLL.
+
+      We simulate the following bubble sort iterations for our LL;
+      for(int i=0; i<sizeOfMemory;i++) // outer loop
+          for(j=0;j<sizeOfMemory-i;j++) // inner loop
+
+      'last' serves as our sizeOfMemory-1 expression
+      and j=i=0=head=this->tail->next
+     */
+
+    while (last != this->tail->next_)
+    {
+      head = this->tail;
+
+      while (next != last)
+      {
+
+        // move head to start of CSLL, then forward successively.
+        head = head->next_;
+        next = head->next_;
+
+        // compare and swap head's and next node's data
+        if (head->data_ < next->data_)
+        {
+          swapNodeData(head, next);
+          swapEvent = true;
+        }
+      }
+
+      // if no swap occurred, break iterations
+      if (!swapEvent)
+      {
+        break;
+      }
+      // reset swap flag
+      swapEvent = false;
 
       // out head points to an Node behind the last element.
       last = head;
@@ -280,24 +377,35 @@ void MyCircularLinkedList<T>::sortCircularListInDescendingOrder() {
   }
 }
 // visualizes MyCircularLinkedList
-template <class T> void MyCircularLinkedList<T>::print() {
-  if (!MyCircularLinkedList::tail) {
+template <class T>
+void MyCircularLinkedList<T>::print()
+{
+  if (!MyCircularLinkedList::tail)
+  {
     cout << "NULL";
-  } else {
+  }
+  else
+  {
     Node<T> *next = this->tail;
-    do {
+    cout << "LINKED LIST: ";
+    do
+    {
       next = next->next_;
       cout << next->data_;
 
-      if (next != this->tail) {
+      if (next != this->tail)
+      {
         cout << " -> ";
       }
     } while (next != this->tail);
   }
 }
 
-template <typename T> void swapNodeData(Node<T> *&lhs, Node<T> *&rhs) {
-  if (lhs && rhs) {
+template <typename T>
+void swapNodeData(Node<T> *&lhs, Node<T> *&rhs)
+{
+  if (lhs && rhs)
+  {
     T temp = lhs->data_;
     lhs->data_ = rhs->data_;
     rhs->data_ = temp;

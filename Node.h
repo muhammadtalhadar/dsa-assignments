@@ -1,6 +1,8 @@
 #pragma once
 
-template <typename T> struct Node {
+template <typename T>
+struct Node
+{
   T data_;
   Node *next_;
 
@@ -11,13 +13,15 @@ public:
   ~Node();
 };
 
-template<typename T> 
-Node<T>::Node(T data, Node<T>* next){
-  this->data_=data;
-  this->next_=next;
+template <typename T>
+Node<T>::Node(T data, Node<T> *next)
+{
+  this->data_ = data;
+  this->next_ = next;
 }
 
-template<typename T>
-Node<T>::~Node(){
-  this->next_=nullptr;
+template <typename T>
+Node<T>::~Node()
+{
+  this->next_ = nullptr;
 }
