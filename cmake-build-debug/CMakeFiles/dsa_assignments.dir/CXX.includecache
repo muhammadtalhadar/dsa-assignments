@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/talha/repos/dsa-assignments/BinaryTree.cpp
+iostream
+-
+BinaryTree.h
+/home/talha/repos/dsa-assignments/BinaryTree.h
+
+/home/talha/repos/dsa-assignments/BinaryTree.h
+BinaryTreeNode.h
+/home/talha/repos/dsa-assignments/BinaryTreeNode.h
+BinaryTreeNodeLinker.h
+/home/talha/repos/dsa-assignments/BinaryTreeNodeLinker.h
+
+/home/talha/repos/dsa-assignments/BinaryTreeLinker.h
+BinaryTree.cpp
+/home/talha/repos/dsa-assignments/BinaryTree.cpp
+
+/home/talha/repos/dsa-assignments/BinaryTreeNode.cpp
+BinaryTreeNode.h
+/home/talha/repos/dsa-assignments/BinaryTreeNode.h
+
+/home/talha/repos/dsa-assignments/BinaryTreeNode.h
+
+/home/talha/repos/dsa-assignments/BinaryTreeNodeLinker.h
+BinaryTreeNode.cpp
+/home/talha/repos/dsa-assignments/BinaryTreeNode.cpp
+
+/home/talha/repos/dsa-assignments/main.cpp
+iostream
+-
+BinaryTree.h
+/home/talha/repos/dsa-assignments/BinaryTree.h
+BinaryTreeLinker.h
+/home/talha/repos/dsa-assignments/BinaryTreeLinker.h
+
