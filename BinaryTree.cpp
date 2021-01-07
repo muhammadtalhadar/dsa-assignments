@@ -14,15 +14,11 @@ void BinaryTree<T>::insert_inner(BinaryTreeNode<T> *&node, T data) {
         node = new BinaryTreeNode<T>(data);
     }
 
-    //data duplication case
-    if (node->data == data) {
-        return;
-    }
 
     //general cases
     if (data < node->data) {
         insert_inner(node->lnode, data);
-    } else {
+    } else if(data>node->data){
         insert_inner(node->rnode, data);
     }
 }
@@ -104,15 +100,15 @@ template<class T>
 int BinaryTree<T>::height_inner(BinaryTreeNode<T> *node) const{
     if (node == nullptr) {
         return 0;
-    } else {
-        return 1+largest<T>(height_inner(node->lnode), height_inner(node->rnode));
     }
+
+    return 1+largest<T>(height_inner(node->lnode), height_inner(node->rnode));
 }
 
 //wrapper method
 template<class T>
 int BinaryTree<T>::height() const {
-    return height_inner(this->root) - 1;
+    return height_inner(this->root);
 }
 
 
@@ -237,8 +233,27 @@ BinaryTreeNode<T> *BinaryTree<T>::min_inner(BinaryTreeNode<T> *node) const {
 }
 
 template<class T>
-BinaryTreeNode<T> *BinaryTree<T>::min() const {
-    return new BinaryTreeNode<T>(min_inner(this->root)->data);
+T BinaryTree<T>::min() const {
+    return min_inner(this->root)->data;
+}
+
+template<class T>
+bool BinaryTree<T>::balanced_inner(BinaryTreeNode<T>* node)const {
+
+    if(node==nullptr) return 1;
+
+    int subtreeHeightDifference=(height_inner(node->rnode) - height_inner(node->lnode));
+    //int subtreeHeightDifferenceAbsolute= subtreeHeightDifference % (subtreeHeightDifference * 2);
+    int subtreeHeightDifferenceAbsolute=abs(subtreeHeightDifference);
+
+    if(subtreeHeightDifferenceAbsolute <=1) return true;
+
+    return false;
+}
+
+template<class T>
+bool BinaryTree<T>::balanced() const {
+    return balanced_inner(this->root);
 }
 
 // returns the larger of two integers

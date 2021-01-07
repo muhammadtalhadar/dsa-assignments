@@ -40,6 +40,8 @@ private:
 
     //returns mem handle to node with min value;
     BinaryTreeNode<T>* min_inner(BinaryTreeNode<T>* node)const;
+
+    bool balanced_inner(BinaryTreeNode<T>* node)const;
 public:
 
     explicit BinaryTree(BinaryTreeNode<T> *root = nullptr);
@@ -63,5 +65,7 @@ public:
     bool deletenode(T data);
 
     //returns a pointer to a copy of of the node with the smallest value,but child pointers are null.
-    BinaryTreeNode<T>* min()const;
+    T min()const;
+
+    bool balanced()const;
 };
